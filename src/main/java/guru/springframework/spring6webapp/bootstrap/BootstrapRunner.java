@@ -19,49 +19,54 @@ public class BootstrapRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Publisher manning = new Publisher();
-        manning.setAddress("20 Baldwin Road");
-        manning.setCity("Shelter Island");
-        manning.setState("New York");
-        manning.setZip("11964");
+        Publisher manning = createPublisher();
 
-        publisherRepository.save(manning);
+        Author eric = createAuthor("Eric", "Evans");
+        Author rod = createAuthor("Rod", "Johnson");
 
-        Author eric = new Author();
-        eric.setFirstName("Eric");
-        eric.setLastName("Evans");
+        Book ddd = createBook("Domain Driven Design", "123456", manning);
+        Book noEJB = createBook("J2EE Development without EJB", "54757585", manning);
 
-        Book ddd = new Book();
-        ddd.setTitle("Domain Driven Design");
-        ddd.setIsbn("123456");
-        ddd.setPublisher(manning);
+        eric.getBooks().add(ddd);
+        rod.getBooks().add(noEJB);
+        ddd.getAuthors().add(eric);
+        noEJB.getAuthors().add(rod);
 
-        Author ericSaved = authorRepository.save(eric);
-        Book dddSaved = bookRepository.save(ddd);
+        authorRepository.save(eric);
+        authorRepository.save(rod);
+        bookRepository.save(ddd);
+        bookRepository.save(noEJB);
 
-        Author rod = new Author();
-        rod.setFirstName("Rod");
-        rod.setLastName("Johnson");
-
-
-        Book noEJB = new Book();
-        noEJB.setTitle("J2EE Development without EJB");
-        noEJB.setIsbn("54757585");
-        noEJB.setPublisher(manning);
-
-        Author rodSaved = authorRepository.save(rod);
-        Book noEJBSaved = bookRepository.save(noEJB);
-
-        ericSaved.getBooks().add(dddSaved);
-        rodSaved.getBooks().add(noEJBSaved);
-
-        authorRepository.save(ericSaved);
-        authorRepository.save(rodSaved);
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
         System.out.println("Publisher Count: " + publisherRepository.count());
 
+    }
+
+    private Book createBook(String title, String isbn, Publisher publisher) {
+        Book book = new Book();
+        book.setTitle(title);
+        book.setIsbn(isbn);
+        book.setPublisher(publisher);
+        return bookRepository.save(book);
+    }
+
+    private Author createAuthor(String firstName, String lastName) {
+        Author author = new Author();
+        author.setFirstName(firstName);
+        author.setLastName(lastName);
+        return authorRepository.save(author);
+    }
+
+    private Publisher createPublisher() {
+        Publisher manning = new Publisher();
+        manning.setPublisherName("Manning Publications");
+        manning.setAddress("20 Baldwin Road");
+        manning.setCity("Shelter Island");
+        manning.setState("New York");
+        manning.setZip("11964");
+        return publisherRepository.save(manning);
     }
 }
