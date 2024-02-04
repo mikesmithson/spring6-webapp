@@ -1,6 +1,7 @@
 package guru.springframework.spring6webapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Author {
 
     private String lastName;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name= "book_id"))

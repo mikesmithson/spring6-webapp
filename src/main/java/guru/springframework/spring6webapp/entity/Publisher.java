@@ -1,5 +1,6 @@
 package guru.springframework.spring6webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Publisher {
     private String city;
     private String state;
     private String zip;
+    @JsonManagedReference
     @OneToMany(mappedBy = "publisher")
     private Set<Book> books = new HashSet<>();
 

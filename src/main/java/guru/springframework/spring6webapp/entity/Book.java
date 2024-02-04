@@ -1,5 +1,6 @@
 package guru.springframework.spring6webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -21,8 +22,10 @@ public class Book {
     private Long id;
     private String title;
     private String isbn;
+    @JsonBackReference
     @ManyToMany(mappedBy = "books")
     private Set<Author> authors = new HashSet<>();
+    @JsonBackReference
     @ManyToOne(targetEntity = Publisher.class)
     private Publisher publisher;
 
