@@ -37,6 +37,8 @@ public class BootstrapRunner implements CommandLineRunner {
         bookRepository.save(ddd);
         bookRepository.save(noEJB);
 
+        bookRepository.findAll().forEach(book -> System.out.println(book.getTitle()));
+
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
