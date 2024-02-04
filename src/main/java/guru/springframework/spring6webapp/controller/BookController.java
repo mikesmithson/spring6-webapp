@@ -21,7 +21,7 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    public Book allBooks(@PathVariable Long id) {
+    public Book fetchABookBy(@PathVariable Long id) {
         return bookService.findById(id);
     }
 
