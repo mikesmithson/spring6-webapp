@@ -36,7 +36,7 @@ class BootstrapRunner(
         bookRepository.save(ddd)
         bookRepository.save(noEJB)
 
-        bookRepository.findAll().forEach(Consumer<Book> { book: Book -> println(book.title) })
+        bookRepository.findAll().forEach(Consumer { book: Book -> println(book.title) })
 
 
         println("In Bootstrap")
